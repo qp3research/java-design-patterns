@@ -22,29 +22,27 @@
  */
 package com.iluwatar.throttling;
 
+import com.iluwatar.throttling.timer.ThrottleTimerImpl;
 import com.iluwatar.throttling.timer.Throttler;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * B2BServiceTest class to test the B2BService
  */
 public class B2BServiceTest {
-
-  @Disabled
+  
   @Test
   public void dummyCustomerApiTest() {
     Tenant tenant = new Tenant("testTenant", 2);
-    // In order to assure that throttling limits will not be reset, we use an empty throttling implementation
-    Throttler timer = () -> { };
+    Throttler timer = new ThrottleTimerImpl(100);
     B2BService service = new B2BService(timer);
 
     for (int i = 0; i < 5; i++) {
       service.dummyCustomerApi(tenant);
     }
     long counter = CallsCount.getCount(tenant.getName());
-    assertEquals(2, counter, "Counter limit must be reached");
+    assertTrue(counter == 2, "Counter limit must be reached");
   }
 }
