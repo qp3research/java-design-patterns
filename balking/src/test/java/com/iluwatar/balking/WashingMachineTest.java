@@ -22,13 +22,13 @@
  */
 package com.iluwatar.balking;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests for {@link WashingMachine}
@@ -41,10 +41,7 @@ public class WashingMachineTest {
   public void wash() throws Exception {
     WashingMachine washingMachine = new WashingMachine();
     ExecutorService executorService = Executors.newFixedThreadPool(2);
-    executorService.execute(() -> {
-      washingMachine.wash();
-      machineStateGlobal = washingMachine.getWashingMachineState();
-    });
+    executorService.execute(washingMachine::wash);
     executorService.execute(() -> {
       washingMachine.wash();
       machineStateGlobal = washingMachine.getWashingMachineState();
