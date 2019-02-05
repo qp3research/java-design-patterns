@@ -72,6 +72,7 @@ public class App {
 
   /**
    * Make calls to the B2BService dummy API
+   * @param service an instance of B2BService
    */
   private static void makeServiceCalls(Tenant tenant) {
     Throttler timer = new ThrottleTimerImpl(10);
